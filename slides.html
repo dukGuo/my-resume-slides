@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <meta name="author" content="log-player">
-  <title>实习汇报</title>
+  <title>slides</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -56,712 +56,129 @@
     <div class="slides">
 
 <section id="title-slide">
-  <h1 class="title">日志查看工具:log-player</h1>
+  <h1 class="title">自我介绍</h1>
 
             <p style=" height: 300px;text-align: right;margin-top: 100px;padding-right: 60px;">
-              郭大可 2022-8
+              郭大可 2025
             </p>
 </section>
 
 <section>
-  <section id="功能简介" class="title-slide slide level1">
-    <h1>功能简介</h1>
+  <section id="" class="title-slide slide level1">
+    <h1>个人信息</h1>
 
   </section>
   <section id="背景" class="slide level2">
-    <h2>任务背景</h2>
-
+    <h2>基本信息</h2>
     <ul>
-      <p>目前在排查问题时，由于多线程下业务繁多，从而在定位问题时，很难跟进上下文。尽管业务已有traceId,但是串联起来还是比较耗时。因而需要约定日志打印方式，以及实现相应的日志查看工具。</p>
-     <img width="600px" style="padding-left: 150px;" src="image/slides/log.png">
+    <li><strong>教育背景:</strong></li>
+    <ul>
+    <li>西北工业大学本硕,计算机科学与技术，导师：谢磊教授</li>
+    </ul>
+    <!-- <br> -->
+    <li><strong>在校研究方向:</strong></li>
+    <ul>
+      <li>高表现力有声书合成（HiGNN-TTS、TACA-TTS）</li>
+      <li>TTS野生语音数据处理（WenetSpeech4TTS）</li>
+      <li>大型语音生成模型（VALL·E、单/多码本LMTTS）</li>
+      <li>多人对话式语音合成（DialoSpeech）</li>
+    </ul>
+    <strong><li>实习经历:</strong></li>
+    <ul>
+    <li><strong>小红书 (2024.04–2024.07)：</strong></li>
+    <ul>
+      <li>E2E音乐合成：数据清洗、codec 重建对比及多码本模型适配。</li>
+    </ul>
+    <li><strong>阿里巴巴 (2024.09–至今)：</strong></li>
+    <ul>
+      <li>单码本 codec 对比研究</li>
+      <li>流式语音 token 解码方案设计</li>
+      <li>vocoder 泛化能力改进及流式推理适配</li>
+      <li>自回归时长预测在 NAR TTS 中的应用研究</li>
+      <!-- <li>上下文感知 ASR 基准测试框架搭建</li> -->
+    </ul>
+    </ul>
     </ul>
   </section> 
-  <section id="界面布局" class="slide level2">
-    <h2>界面布局</h2>
-    <ul>
-      <li>初始化页 </li>
-      <p>未打开文件时，显示初始化页</p>
-   
-      <li>主页面</li>
-      <img  width="250px" data-src="image/slides/1660705878927.png" title="welcomePage"
-        alt="welcomePage" style="position:absolute;top:120px ;left: 600px;"/>
-
-      <img width="690px"  data-src="image/slides/mainpage.png" />
-    </ul>
-      
-    
-  </section>
-  <section id="日志查看" class="slide level2">
-    <h2>日志查看</h2>
-   
-    <ul>
-      <hr>
-      <li>文本展示</li>
-      <ul>
-        <li>打开大文件: 百Mb级</li>
-        <li>行号显示</li>
-      </ul>
-      <li>多标签显示</li>
-      <ul>
-        <li>打开多个文件</li>
-      </ul>
-      <li>跳转到指定行</li>
-      <ul>
-        <li>菜单栏/快捷键</li>
-      </ul> 
-      <li>最近打开</li>
-      <li>高亮当前行</li>
-      <img src="image/slides/logedit.png" width="550px" style="position:absolute;top:280px ;right: 50px;">
-
-    </ul>
-      </section>
-  <section id="查询与高亮" class="slide level2">
-    <h2>查询与高亮</h2>
-    <ul>
-      <img src="image/slides/search_highlight.png" width="700px" style="margin: 0px;padding-left: 25px;">
-      <li>
-        <p>右键快捷查询/高亮</p>
-      </li>
-      <li>
-        <p>高亮关键词</p>
-        <ul>
-          <li>集中显示高亮列表:&nbsp &nbsp;方便管理高亮词及色彩</li>
-          <li>自定义高亮色彩: &nbsp &nbsp;多词同色</li>
-        </ul>
-      </li>
-      <li>
-        <p>查询关键词</p>
-        <ul>
-          <li>大小写模糊</li>
-          <li>正则表达式匹配</li>
-        </ul>
-      </li>
-    </ul>
-  </section>
-  <section id="日志过滤" class="slide level2">
-    <h2>日志过滤</h2>
-    <ul>
-      <img class="float-right" src="image/slides/filter.png" width="500px" style="margin: 40px 20px 20px 35x;">
-      <hr>
-      <li>右键快捷过滤</li>
-      <li>大小写模糊/正则表达式</li>
-      <p><strong>eg:&nbsp;</strong>&nbsp;\[[0-9]{4}-[0-1][0-9]-[0-3][0-9]</p>
-      <li>正向/反向过滤</li>
-      <li>子窗口显示</li>
-      <ul>
-        <li>子窗口搜索/高亮</li>
-        <li>支持嵌套过滤(右键)</li>
-      </ul>
-    </ul>
-  </section>
-  <section id="时间线分析" class="slide level2">
-    <h2>时间线分析</h2>
-    <ul>
-      <img class="float-right" src="image/slides/timeline.png" width="500px" style="margin: 40px 20px 20px 35px;">
-      <hr>
-      <li>以行号为ID,时间为副ID,整行为内容
-        <ul>
-          <li>更改时间/内容匹配模板</li>
-          <p><strong>eg:&nbsp;</strong>&nbsp;\[[0-9]{4}-[0-1][0-9]-[0-3][0-9]</p>
-          <li>子窗口添加时间点</li>
-        </ul>
-      </li>
-      <li>通过时间线定位特定行
-        <ul>
-          <li>主/子窗口协同显示</li>
-          <li>方向键快捷切换</li>
-        </ul>
-      </li>
-      <li>导出当前时间线</li>
-    </ul>
-  </section>
-  <section id="时间线功能拓展" class="slide level2">
-    <h2>时间线分析拓展</h2>
-    <ul>
-      <li>基于单时间线分析,实现多时间线追踪功能</li>
-      <ul>
-        <li>更广泛的适用性: 多线程日志分析</li>
-        <li>保留了单时间线的高亮动画,删除定位行功能</li>
-        <li>与过滤功能共同使用,事半功倍</li>
-      </ul>
-     
-    </ul>
-    <table>
-      <td><img width="500px" src="image/slides/trace1.png"></td>
-      <td><img width="400px"src="image/slides/trace2.png"></td>
-    </table>
-  </section>
-  <section id="番外功能" class="slide level2">
-    <h2>番外功能</h2>
-    <ul>
-      <li>文件分割
-        <ul>
-          <li>指定行范围分割</li>
-          <li>保存并新建标签页打开</li>
-        </ul>
-        <table>
-          <td><img src="image/slides/split1.png", width="460px"></td>
-          <td><img src="image/slides/split2.png"  width="460px"></td>
-        </table>
-      </li>
-    </ul>
-  </section>
-    <section id="番外功能2" class="slide level2">
-      <h2>番外功能(cont'd)</h2>
-      <ul>
-        <li>过滤结果导出</li>
-        <img src="image/slides/export.png" width="640px" style="margin-left: 30px;">
-        <li>支持快捷键</li>
-      </ul>
-    </section>
 </section>
 <section>
-  <section id="模块设计与实现" class="title-slide slide level1">
-    <h1>模块设计与实现</h1>
+  <section id="audiobook" class="title-slide slide level1">
+    <h1>表现力有声书合成</h1>
 
   </section>
-  <section id="总体设计" class="slide level2">
-    <h2>总体设计</h2>
+  <section id="HiGNN-TTS" class="slide level2">
+    <h2>HiGNN-TTS: 利用文本结构的表现力有声书合成</h2>
     <ul>
-      <li>开发环境 : Qt 5.15</li>
-      <li>结构示意图</li>
-      <img  width="750px" src="image/slides/struct.png">
+      <li>出发点：韵律表达与文本依存(韵律)结构相关 -> 如何高效利用文本信息？</li>
+
+      <li>方法</li>
+      <ul>
+        <li>依存关系与韵律表达强相关 -> 句法依存图作为先验信息 -> GNN建模 </li>
+        <li>层次化的韵律建模 -> 词/句/上下文 -> 虚拟全局节点+上下文 Attention</li>
+        <li>利用文本语义信息 -> Bert Embedding 初始化图节点</li>
+        <li>无监督学习效果差 -> 预训练的 Mel Encoder 做监督</li>
+      </ul>
+      <div style="display: flex; align-items: stretch; gap: 10px;">
+        <img src="imgs/hignn/gnn.jpg" style="height: 280pt; object-fit: cover;">
+      </div>
+      <!--  style="position:absolute;top:160px ;left: 520px;" -->
+      <!-- <li>结构示意图</li> -->
     </ul>
   </section>
-    <section id="核心documenttab" class="slide level2">
-      <h2>核心:DocumentTab</h2>
+    <section id="Audio Samples" class="slide level2">
+      <h2>HiGNN-TTS Results</h2>
       <hr>
-      <ul>
-        <li>向下读取日志数据</li>
-        <ul>
-          <li>主窗口从FileSource获取数据</li>
-          <li>子窗口从sublog获取数据</li>
-        </ul>
-        <li>向上接受控制信号</li>
-        <ul>
-          <li>来自Controller和MainWindow的菜单信号</li>
-          <li>来自内部Post的信号(customEvent处理)</li>
-        </ul>
-        <li>向用户提供操作接口</li>
-        <ul>
-          <li>查找/高亮/分割/跳转等操作</li>
-          <li>提供操作反馈:执行结果/执行失败原因等</li>
-        </ul>
-      </ul>
+
     </section>
-  <section id="后端" class="slide level2">
-    <h2>后端</h2>
+  <section id="TACA" class="slide level2">
+    <h2>TACA-TTS: 从大量野生数据中建模"文本->风格"映射</h2>
     <ul>
-      <li>主要功能: 打开日志，读取并解析日志内容，输出给界面</li> 
-      <img src="image/slides/backend.png" width="600px" style="margin: 0px;padding-left: 10px;" > 
-      <p>
-         界面通过FileSource提供的getLog()方法获取文本值
-         <blockquote>
-          之所以抽象出ILogSource,是为了后续支持从stdin(或其他源)处获取日志
-         </blockquote>
-      </p>
-    </ul>
-    
+      <li>出发点: 当 AM 和数据固定时，TTS 的表现力上限取决于风格表征的好坏</li>
+      <li>方法： </li>
 
-  </section>
-  <section id="后端-contd" class="slide level2">
-    <h2>后端 (cont'd)</h2>
-    <ul>
-      <li>文件读取方式: <strong>open+read</strong> 代替<strong> open+mmap</strong></li>
-    </ul>
-    <pre class="cpp"><code data-trim data-line-numbers="|8|">
-            <script type="text/template">
-              bool FileSource::open()
-                {
-                    if (!mFile.open(QFile::ReadOnly)) {
-                        qCritical()<<"failed to open";
-                        return false;
-                    }
-    
-                    mMem = mFile.map(0, mFile.size(), QFile::MapPrivateOption);
-                    if (!mMem) {
-                        qCritical("mmap failed");
-                        mFile.close();
-                        return false;
-                    }
-    
-                    mLog->init(mMem);
-                    mLog->setSource(shared_from_this());
-    
-                    parse();
-                    return true;
-                }
-            </script>
-          </code></pre>
-          <ul>
-            <p><strong>mmap</strong>通过直接将文件映射到进程的地址空间上,与<strong>read</strong>相比减少了一次Memcpy操作. 只读不需要考虑一致性.</p>
-          </ul>
-  </section>
-  <section id="控制模块" class="slide level2">
-    <h2>控制模块</h2>
-    <ul>
-      <li>Controller.h</li>
-      <pre class="cpp"><code data-trim data-line-numbers="|4-21|,|23,24,27,28|">
-        <script type="text/template">
-class Controller
-{
-public:
-    enum ActionType{
-        Filter,
-        RevertFilter,
-        OpenFile,
-        SplitFile,    
-        CloseTab,
-        LocateLine,
-        SetPattern,   
-        SaveTimeLine,
-        ClearTimeLine,
-        Find,
-        RevertFind,     
-        FindNext,
-        FindPrevious,
-        Highlight,         
-        Shortcut,       
-        ExportSubLog,   
-    };
-
-private:
-    Controller();
-    void setAction(ActionType Type,QString hint,QString shortcut,bool isDoc = false,QString icon = "");
-
-public:
-    static Controller& instance();
-    QString getShortcutHint();
-
-    QAction* actionFor(ActionType type) {
-           return mActions[type];
-       }
-
-       SearchBar* searchBar() {
-           return mSearchBar;
-       }
-
-       void setSearchBar(SearchBar* bar) {
-           mSearchBar = bar;
-       }
-
-       TagListWidget* tagList() {
-           return mTagList;
-       }
-
-       void setTagList(TagListWidget* taglist) {
-           mTagList = taglist;
-       }
-
-       QVector<QAction*> actionsForDoc(){
-           return mDocActions;
-       }
-       QRegExp getTime(){
-           return timeRx;
-       }
-       QRegExp getContent(){
-           return contentRx;
-       }
-       bool setTimeRx(QString pattern);
-       bool setContentRx(QString pattern);
-
-private:
-    QMap<ActionType, QAction*> mActions;
-    QVector<QAction*> mDocActions;
-    TagListWidget* mTagList;
-    SearchBar* mSearchBar;
-    QRegExp timeRx;
-    QRegExp contentRx;
-};
-
-        </script>
-      </code></pre>
-      <li>通过枚举和QVector将控制信号集成起来</li>
-      <li>私有构造函数控制全局只有一个实例</li>
-    </ul>
-  </section>
-  <section id="控制模块-cont" class="slide level2">
-      <h2>控制模块 (cont'd)</h2>
       <ul>
-        <hr>
-        <li>将与文件(标签页)相关的QAction统一管理</li>
-        <pre class="cpp"><code data-trim data-noescape data-line-numbers><script type="text/template">
-              // Controller.h
-              QVector<QAction*> mDocActions;
-              // DocumentTab.cpp
-              void DocumentTab::unBindController()
-              {
-                for (auto& conn : mConnections)
-                disconnect(conn);
-                mConnections.clear();
-              }
-
-            </script></code></pre>
+        <li>AM 对数据质量要求高，联合训练风格表征存在局限性-> 将风格建模从声学模型中解耦，多阶段训练(风格空间构建->"文本-风格"映射->声学模型联调)</li>
+        <li>少量有标注数据+大量无监督数据+对比学习 -> 完备的风格空间</li>
+        <li>大量文本音频对+对比学习+cos loss -> "文本-风格"映射</li>
+        <li>设计context encoder 从文本中编码风格表征，在两种主流声学模型(Vits,LM)上验证有效性</li>
       </ul>
-  </section>
-  <section id="控制模块-cont" class="slide level2">
-    <h2>控制模块 (cont'd)</h2>
-    <ul>
-    <hr>
-    <li>对于每个文档搜索框与高亮标签也是独立的</li>
-    <pre class="cpp"><code data-trim data-line-numbers data-noescpe><script type="text/template">
-              // 以高亮标签为例
-              void DocumentTab::loadCurrentTaglist(LogEdit* editor)
-              {
-                auto taglist = Controller::instance().tagList();
-                taglist->clear();
-                for (auto& p : editor->highlighter()->allQuickHighlights()) {
-                 taglist->addTag(p.key, p.color);
-                }
-              }
-              void DocumentTab::unBindController()
-              {
-                for (auto& conn : mConnections)
-                  disconnect(conn);
-                mConnections.clear();
-              }
-
-            </script></code></pre>
-      </ul>
-    </section>
-  <section id="高亮子模块" class="slide level2">
-    <h2>高亮子模块</h2>
-    <hr>
-    <ul>
-      <li>通过继承QSyntaxHighlighter实现自定义高亮</li>
-      <li>一个标签页(文件)中的高亮可分为两类</li>
-      <ul>
-        <li><strong>搜索高亮 </strong>: 最多存在一个实例 + 颜色不可变 + 支持大小写/正则 + 变化时无需同步</li>
-        <pre class="cpp"><code><script type="text/template">    HighlightPattern mSearchHighLight;</script></code></pre>
-        <li><strong>普通高亮 </strong>: 存在实例数无上限 + 颜色可变 + 无需支持模式匹配 + 变化时应和Taglist同步</li>
-        <pre class="cpp"><code><script type="text/template">    QMap<QString, HighlightPattern> mQuickHighLights;</script></code></pre>
-      </ul>
+      <div style="display: flex; align-items: stretch; gap: 10px;">
+        <img src="imgs/taca/overview.jpg" style="height: 195pt; object-fit: cover;">
+        <img src="imgs/taca/context.jpg" style="height: 170pt; object-fit: cover;">
+      </div>
     </ul>
   </section>
-    <section id="高亮子模块-cont" class="slide level2">
-      <h2>高亮子模块(cont'd)</h2>
-      <ul>
-        <li>重写 highlightBlock </li>
-          <pre class="cpp"><code data-line-numbers data-trim ><script type="text/template">
-          void Highlighter::highlightBlock(const QString &text) {
-              bool searchHlApplied = false;
-              //选词高亮
-              for (auto p : mQuickHighLights) {
-                  int i = 0;
-                  auto len = p.key.length();
-                  QTextCharFormat fmt;
-                  fmt.setFontUnderline(true);
-                  fmt.setForeground(Qt::white);
-                  fmt.setBackground(p.color);
-                  if (!searchHlApplied && p.key == mSearchHighLight.key) {
-                      fmt.setFontUnderline(true);
-                      searchHlApplied=true;
-                  }
-                  while ((i = text.indexOf(p.key, i, p.caseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive)) >= 0) {
-                      setFormat(i, len, fmt);
-                      i+=len;
-                  }
-              }
-
-            //搜索高亮
-              if (mSearchHighLight.key.length() == 0 || searchHlApplied)
-                  return;
-              auto len = mSearchHighLight.key.length();
-              QTextCharFormat fmt;
-              fmt.setFontUnderline(true);
-              fmt.setBackground(QColor(Qt::gray));
-              int i = 0;
-              while ((i = text.indexOf(mSearchHighLight.key, i, mSearchHighLight.caseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive)) >= 0) {
-                  setFormat(i, len, fmt);
-                  i+=len;
-              }
-          }
-          </script></code></pre>
-          <p>当高亮发生改变时,通过rehighlight()对高亮进行更改</p>
-        </ul>
-      </ul>
-    </section>
-  <section id="查询子模块" class="slide level2">
-    <h2>查询子模块</h2>
+  <section id="TACA" class="slide level2">
+    <h2>TACA-TTS: 从大量野生数据中建模"文本->风格"映射</h2>
     <ul>
-      <hr>
-      <pre class="cpp"><code data-line-numbers="|10-61|,|13-34|,|57-62|" data-trim ><script type="text/template">
-int ILog::find(SearchArg arg, Location loc, bool forward)
-{
-    auto range = availRange();
-    if (forward) {
-        range.from = loc.line;
-    } else {
-        range.to = loc.line;
-    }
-
-    QThreadPool::globalInstance()->start([=]{
-
-        auto patternLen = arg.pattern.length();
-        auto doSearch = [=](int line, int pos) {
-            auto text = readLine(line);
-            auto caseSense = arg.caseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive;
-            SearchResult ret;
-            ret.line = line;
-            ret.offset = -1;
-
-            if (arg.regex) {
-                QRegExp pattern(arg.pattern, caseSense);
-                ret.offset = forward ? text.indexOf(pattern, pos) : text.lastIndexOf(pattern, pos);
-                if (ret.offset >= 0) {
-                    ret.matchedText = pattern.cap();
-                }
-            } else {
-                ret.offset = forward ? text.indexOf(arg.pattern, pos, caseSense) : text.lastIndexOf(arg.pattern, pos, caseSense);
-                if (ret.offset >= 0) {
-                    ret.matchedText = text.mid(ret.offset, patternLen);
-                }
-            }
-
-            return ret;
-        };
-
-        //第一行特殊处理
-        auto ret = doSearch(loc.line, loc.offset);
-        if (ret.offset >= 0)
-            goto __return;
-
-        //其他行
-        if (forward) {
-            for (auto i = range.from+1; i <= range.to; i++) {
-                ret = doSearch(i, 0);
-                if (ret.offset >= 0)
-                    goto __return;
-            }
-        } else {
-            for (auto i = range.to - 1; i >= range.from /*&& !op->isCanceled()*/; i--) {
-                ret = doSearch(i, -1);
-                if (ret.offset >= 0)
-                    goto __return;
-            }
-        }
-
-__return:
-        post(new FindDoneEvent(shared_from_this(), ret));
-        // 在DocumentTab中处理和显示结果
-        // 执行操作: 
-        // 1. 滚动到当前行 
-        // 2. 选中当前词 
-        // 3. 如果搜索词改变,更新高亮类
-    });
-
-    return 0;
-}
-      </script></code></pre>
-      <ul>
-        <p> 查询词的搜索与高亮是彼此分离的</p>
-      </ul>
-    </ul>
-  </section>
-  <section id="过滤子模块" class="slide level2">
-    <h2>过滤子模块</h2>
-    <ul>
-      <li>过滤 = 创建子log (树结构) + 向子log填充 (map/reduce)</li>
-      <hr>
-      <pre class="cpp"><code data-line-numbers="|3-10|,|15-53|,|41-48|" data-trim><script type="text/template">
-int ILog::createChild(SearchArg arg, QString id)
-{
-    auto range = availRange();
-    auto chunkSize = 200000;
-    QVector<Range> taskRanges;
-    int offset = range.from;
-    while (offset + chunkSize <= range.to) {
-        taskRanges.push_back({offset, offset+chunkSize-1});
-        offset+=chunkSize;
-    }
-    if (offset+chunkSize > range.to) {
-        taskRanges.push_back({offset, range.to});
-    }
-
-    QtConcurrent::run([this, arg, taskRanges, range, id]{
-        shared_ptr<SubLog> sub(new SubLog(shared_from_this(), arg));
-        sub->mSource = mSource;
-        sub->setId(id);
-        mChildren.push_back(sub);
-
-        function<QVector<int>(const Range&)> mapFunc = [this, arg](const Range& r){
-            auto revert = arg.revert;
-            auto caseSense = arg.caseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive;
-            QRegExp pattern(arg.pattern, caseSense);
-            QVector<int> ret;
-            ret.reserve(r.size());
-            QString line;
-
-            for (int i = r.from; i <= r.to ; i++) {
-                line.clear();
-                line.append(readLine(i));
-                auto match = arg.regex ? line.contains(pattern) : line.contains(arg.pattern, caseSense);
-                if (match ^ revert) {
-                    //match 0 revert 1 || match 1 revert 0
-                    ret.push_back(i);
-                }
-            }
-
-            return ret;
-        };
-        // map-reduce
-        auto rets = QtConcurrent::mapped(taskRanges, mapFunc);
-        
-        sub->mLineInParent.reserve(range.size());
-        for (auto i = 0; i < taskRanges.size() ; i++) {
-            auto ret = rets.resultAt(i);
-            sub->mLineInParent.append(ret);
-        }
-        sub->mLineInParent.shrink_to_fit();
-
-        post(new SubLogCreatedEvent(sub));
-        // 同样在DocumentTab中处理:为subLog创建标签等
-    });
-
-    return 0;
-}
-      </script></code></pre>
-    </ul>
-  </section>
-  <section id="过滤子模块-contd" class="slide level2">
-  <h2>过滤子模块(cont'd)</h2>
-  <ul>
-    <li>为子log创建页面</li>
-    <pre class="cpp"><code data-trim  data-line-numbers><script type="text/template">
-    void DocumentTab::onSubLogCreated(shared_ptr<SubLog> subLog)
-    {
-        if (!subLog->availRange().isValid()) {
-          if (QMessageBox::Ok != QMessageBox::warning(this, "查找结果", "没有匹配的文本", QMessageBox::Ok)) {
-            return;
-          }
-        }
-      
-        auto viewer = new LogViewer(&mFocusManager);
-      
-        auto subEdit = viewer->getEdit();
-      
-        bindEditor(subEdit,true);
-        QString revert = subLog->getSearchArg().revert? "_revert" : "";
-      
-        appendSubLog(viewer, subLog->getSearchArg().pattern+revert);
-      
-        subEdit->setLog(subLog);
-      }
-    </script></code></pre>
-    <blockquote>新建的sub Tab在逻辑地位上等同于主页面</blockquote>
-  </ul>
-  </section>
-  <section id="时间线子模块" class="slide level2">
-    <h2>时间线子模块</h2>
-    <hr>
-    <ul>
-      <li>时间线通过<strong>QGraphics</strong>实现,主体为TimeLine + List &lt;TimeNode &gt; </li>
-      <li>TimeNode = TimeHead + TimeBody</li>
+      <li>对比学习正负样例构建：</li>
+      <blockquote>
+        <p>风格空间构建：</p>
         <ul>
-          <li><strong>TimeHead</strong>用来显示节点位置及时间信息</li>
-          <li><strong>TimeBody</strong>用来显示TimeNode的日志内容</li>
-          <img width="400px" src="image/slides/timeline1.png" style="margin-bottom: 0px;">
+          <li>同一句的不同切片→正样例</li>
+          <li>同一类别的不同音频切片→正样例</li>
         </ul>
-      <li>TimeTrace = List&lt;string&gt; + List&lt;timeline&gt;</li>
-    </ul>
-
-  </section>
-    <section id="时间线子模块contd" class="slide level2">
-      <h2>时间线子模块(cont'd)</h2>
-      <ul>
-        <li>快捷跳转</li>
+        <p>文本-风格映射：</p>
         <ul>
-          <li>重写TimeNode双击与TimeLine键盘事件</li>
-          <li>从根节点开始先序遍历,对每个log都进行跳转</li>
+          <li>音频风格表征间相似度，大于α→正样例，小于β→负样例</li>
         </ul>
-      </ul>
-      <pre class="cpp"><code data-line-numbers data-trim><script type="text/template">  
-void DocumentTab::onLineEmphasized(shared_ptr<ILog> who, int line, bool isSource)
-{
-    auto rootLine = who->toRootLine(line);
-    auto root = who->rootLog();
+      </blockquote>
+      <li> 声学模型设计：</li>
 
-    //从上到下，触发emphasize
-    deepEmphasizeLine(root, rootLine, isSource ? who : shared_ptr<ILog>());
-}
-
-void DocumentTab::deepEmphasizeLine(const shared_ptr<ILog> &log, int line, const shared_ptr<ILog> &source)
-{
-    //高亮自己
-    if (log != source) {//只在非源的log上刷新。否则会出现双击某个文本框时，自己这个文本框的高亮行跳到了第一行位置
-        auto edit = findLogEditByLog(log);
-        if (edit)
-            edit->onLogEmphasized(line);
-    }
-
-    //高亮子节点
-    auto children = log->children();
-    for (auto&& child : children) {
-        deepEmphasizeLine(child, child->fromParentLine(line), source);
-    }
-}
-
-      </script></code></pre>  
-    
-
-  </section>
-  <section id="其他子模块" class="slide level2">
-    <h2>其他子模块</h2>
-    <ul>
-      <li>工具栏</li>
-      <ul>
-      <li>搜索框</li>
-        <p>QComboBox + btn * 2</p>
-      <li>Tag框</li>
-        <p>QListWidget: 高亮词-色彩 对</p>
-      </ul>
-      <p>工具栏只实例化一个,根据不同的Tab装载数据</p>
-      <li>文件分割</li>
-      <p>从起始行开始遍历LogSource的数据,逐行写入</p>
+       <div style="display: flex; align-items: stretch; gap: 10px;">
+        <img src="imgs/taca/vits.jpg" style="height: 190pt; object-fit: cover;">
+        <img src="imgs/taca/lm.jpg" style="height: 190pt; object-fit: cover;">
+      </div>
     </ul>
+
   </section>
+  <section id="TACA" class="slide level2">
+    <h2>TACA-TTS Results</h2>
+
+  </section>
+
 </section>
-<section>
-  <section id="实习感想" class="title-slide slide level1">
-    <h1>实习总结</h1>
 
-  </section>
-  <section id="实习总结" class="slide level2">
-    <h2>实习总结</h2>
-    <hr>
-    <ul>
-      <li>基本完成了既定的实习任务</li>
-      <li>在既定实习任务的基础上,加入了自己的想法</li>
-      <li>受限于能力和精力,一些功能尚未完善</li>
-    </ul>
-  </section>
-  <section id="实习感想1" class="slide level2">
-      <h2>实习感想</h2>
-      <hr>
-      <ul>
-        <li>Qt</li>
-        <ul>
-          <li>从零开始,在实践中学习熟悉了Qt框架</li>
-          <li>完整的经历了一次GUI程序的实现,不再惧怕界面开发</li>
-        </ul>
-        <hr>
-        <li>实践</li>
-        <ul>
-          <li>mmap,map/reduce等不再是PPT上考点,而是实际的代码</li>
-          <li>在实践中不断接触学习新的东西</li>
-        </ul>
-        <hr>
-        <p>同时,也很感谢公司提供这次实习机会</p>
-      </ul>
-    </section>  
-    <section id="thank" class="slide level2">
-      <h1>
-      <span>Thanks For Watching!</span>
-      </h1>
-      <hr>
-      <p style="text-align: center;">And <strong>Q&A</strong></p>
-    </section>
-</section>
 
     </div>
   </div>
@@ -931,7 +348,7 @@ void DocumentTab::deepEmphasizeLine(const shared_ptr<ILog> &log, int line, const
           width: 1024, height: 768,
           plugins: [ RevealMarkdown, RevealHighlight],
           slideNumber: 'c/t',
-          controlsTutorial: false,
+          controlsTutorial: true,
           progress: false,
           hash: true,
           center: false,
