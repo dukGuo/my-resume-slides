@@ -18,6 +18,34 @@
       .font-serif {
         font-family: 'Source Serif Pro', 'Songti SC', 'SimSun', 'Serif', serif;
       }
+      .audio-grid {
+        display: grid;
+        /* 两列布局 */
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;               /* 列之间的间距 */
+        margin-top: 1rem;
+        justify-items: center;   /* 每列内部水平居中 */
+      }
+
+      .audio-column {
+        /* 列内部垂直排布：标题在上，音频在下 */
+        display: flex;
+        flex-direction: column;
+        align-items: center;     /* 标题 & audio 都水平居中 */
+        gap: 1.0rem;               /* 行之间的间距 */
+      }
+
+      .column-title {
+        font-size: 1.0rem;
+        font-weight: bold;
+        /* 你还可以加下划线、边距等等装饰 */
+      }
+
+      /* 可选：统一所有 audio 的宽度，或者让它自适应列宽 */
+      .audio-column audio {
+        width: 300px;            /* 固定宽度 */
+        /* width: 100%; max-width: 300px; */ /* 或者自适应＋上限 */
+      }
     </style>
     <script>
       window.MathJax = {
@@ -48,6 +76,8 @@
   <style>
     .float-right{float: right;}
     .float-left{float: left;}
+
+    
     </style>
   <!-- <link rel="stylesheet" href="dist/theme/simple.css" id="theme"> -->
 </head>
@@ -119,6 +149,7 @@
         <li>无监督学习效果差 -> 预训练的 Mel Encoder 做监督</li>
       </ul>
       <div style="display: flex; align-items: stretch; gap: 10px;">
+        <img src="imgs/hignn/overview.jpg" style="height: 280pt; object-fit: cover;">
         <img src="imgs/hignn/gnn.jpg" style="height: 280pt; object-fit: cover;">
       </div>
       <!--  style="position:absolute;top:160px ;left: 520px;" -->
@@ -127,7 +158,25 @@
   </section>
     <section id="Audio Samples" class="slide level2">
       <h2>HiGNN-TTS Results</h2>
-      <hr>
+      <div class="audio-grid">
+        <!-- 第一列：一个整体容器，里头既有标题，也有两条 audio -->
+        <div class="audio-column">
+          <div class="column-title">FS2-BERT</div>
+          <audio controls src="audios/hignn/FS2BERT/DB_19M_000033_0007.wav"></audio>
+          <audio controls src="audios/hignn/FS2BERT/DB_26F_010041_0005.wav"></audio>
+          <audio controls src="audios/hignn/FS2BERT/long1.wav"></audio>
+          <audio controls src="audios/hignn/FS2BERT/long2.wav"></audio>
+        </div>
+      
+        <!-- 第二列：同理 -->
+        <div class="audio-column">
+          <div class="column-title">HiGNN-TTS</div>
+          <audio controls src="audios/hignn/HiGNN-TTS/DB_19M_000033_0007.wav"></audio>
+          <audio controls src="audios/hignn/HiGNN-TTS/DB_26F_010041_0005.wav"></audio>
+          <audio controls src="audios/hignn/HiGNN-TTS/long1.wav"></audio>
+          <audio controls src="audios/hignn/HiGNN-TTS/long2.wav"></audio>
+        </div>
+      </div>
 
     </section>
   <section id="TACA" class="slide level2">
@@ -174,12 +223,239 @@
   </section>
   <section id="TACA" class="slide level2">
     <h2>TACA-TTS Results</h2>
+    
+  <div class="audio-grid">
+    <!-- 第一列：一个整体容器，里头既有标题，也有两条 audio -->
+    <div class="audio-column">
+      <div class="column-title">VITS</div>
+      <audio controls src="audios/taca/VITS/text_1.wav"></audio>
+      <audio controls src="audios/taca/VITS/text_5.wav"></audio>
+    </div>
+  
+    <!-- 第二列：同理 -->
+    <div class="audio-column">
+      <div class="column-title">TACA-VITS</div>
+      <audio controls src="audios/taca/TACA-VITS/text_1.wav"></audio>
+      <audio controls src="audios/taca/TACA-VITS/text_5.wav"></audio>
+    </div>
+  </div>
 
+    <br>
+  <div class="audio-grid">
+    <!-- 第一列：一个整体容器，里头既有标题，也有两条 audio -->
+    <div class="audio-column">
+      <div class="column-title">LM</div>
+      <audio controls src="audios/taca/LM/text_1.wav"></audio>
+      <audio controls src="audios/taca/LM/text_5.wav"></audio>
+    </div>
+  
+    <!-- 第二列：同理 -->
+    <div class="audio-column">
+      <div class="column-title">TACA-LM</div>
+      <audio controls src="audios/taca/TACA-LM/text_6.wav"></audio>
+      <audio controls src="audios/taca/TACA-LM/text_6.wav"></audio>
+    </div>
+  </div>
+  
+  
   </section>
 
 </section>
+<section>
+  <section id="stream" class="title-slide slide level1">
+    <h1>流式语音生成</h1>
+  
+  </section>
+<section id="Stream" class="slide level2">
+  <h2>StreamFlow：Flow-matching流式解码方案</h2>
+  <ul>
+    <li>出发点: ASR token提升了LM的稳定，但后端解码依赖Flow-matching -> 难以满足实时性要求</li>
+    <li>方法： </li>
+    <ul>
+        <li>架构调整: <del>UNet+Transfomer</del> -> DiTs (利于模型感受野控制) </li>
+        <li>流式 != causal != AR, 流式模型可以拥有未来感受野</li>
+        <li>临近token -> block, 以 block 为基本单元通过mask控制感受野</li>
+    </ul>
+  <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+    <img src="imgs/streamfm/overview.jpg" style="height: 280pt; object-fit: cover;">
+    <img src="imgs/streamfm/infer.jpg" style="height: 90pt; object-fit: cover;">
+  </div>
+  </ul>
+</section>
+<section id="Stream" class="slide level2">
+  <h2>StreamFlow：Flow-matching流式解码方案</h2>
+  <ul>
+    <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+      <img src="imgs/streamfm/mask.jpg" style="height: 140pt; object-fit: cover;">
+      <img src="imgs/streamfm/dit.jpg" style="height: 130pt; object-fit: cover;">
+    </div>
+    <li>三种典型mask：</li>
+    <ul>
+      <li>Block Mask: block内可见，不改变感受野 </li>
+      <li>Backward Mask: 可见历史 block，将感受野向历史扩张 </li>
+      <li>Forward Mask: 可见未来 block 将感受野向未来扩张 </li>
+    </ul>
+    <li>三种mask在DiT block中自由分配，可以精确的控制模型整体可见范围（类似卷积）</li>
+    <blockquote>Token2wav 是比较local，对全局感受野的需求不大</blockquote>
+  </ul>
+</section>
+<section id="Stream" class="slide level2">
+  <h2>StreamFlow Results</h2>
+  <!-- <ul><p>Speed</p></ul> -->
+    <div class="audio-grid">
+      <!-- 第一列：一个整体容器，里头既有标题，也有两条 audio -->
+      <div class="audio-column">
+        <div class="column-title">Non-Streaming</div>
+        <audio controls src="audios/stream/samples/DiT-CV(Non-Streaming)/0.wav"></audio>
+        <audio controls src="audios/stream/samples/DiT-CV(Non-Streaming)/2.wav"></audio>
+        <!-- <audio controls src="audios/stream/samples/DiT-CV(Non-Streaming)/2.wav"></audio> -->
+        <audio controls src="audios/stream/samples/DiT-CV(Non-Streaming)/5.wav"></audio>
+      </div>
+    
+      <!-- 第二列：同理 -->
+      <div class="audio-column">
+        <div class="column-title">Streaming</div>
+        <audio controls src="audios/stream/samples/StreamFlow-LR/0.wav"></audio>
+        <audio controls src="audios/stream/samples/StreamFlow-LR/2.wav"></audio>
+        <!-- <audio controls src="audios/stream/samples/DiT-CV(Non-Streaming)/2.wav"></audio> -->
+        <audio controls src="audios/stream/samples/StreamFlow-LR/5.wav"></audio>
+      </div>
+    </div>
+   <br> 
+  <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+    <!-- <img src="imgs/streamfm/mask.jpg" style="height: 140pt; object-fit: cover;"> -->
+    <img src="imgs/streamfm/speed.png" style="height: 180pt; object-fit: cover;">
+  </div>
+</section>
+
+<section id="vocoder" class="slide level2">
+  <h2>Vocoder 流式适配</h2>
+   <ul>
+    <li> 现有问题：</li>
+    <ul>
+      <li>现有BigVGAN未来感受野过大，首包留存率过低 (时延)</li>
+      <li>通过Overlap + Fade-in & Fade-out可以缩减感受野，但会引入由相位冲突导致的爆破音 (流式)</li>
+      <li>Causal-BigVGAN 音质下降严重 (音质)</ul>
+    </ul>
+    <br>
+    <ul><p><strong>Trade-off:</strong> 在维持较高的首包留存率的前提下，如何提升流式生成的音质？🧐</p>
+    <ul>
+      <li>混合Causal卷积与正常卷积! 构造不对称感受野 </li>
+      <li>底层ResBlock -> 替换为Causal，通过3*1卷积补偿感受野</li>
+      <li>高层ResBlock -> 缩减dilation，压缩感受野</li>
+      <li>转置卷积保持不变（Causal化后音质下降）</li>
+    </ul>
+    </ul>
+    <ul>
+    <li>结果：</li>
+    <ul>
+      <li>感受野（帧）：33+33 -> 51+11</li>
+      <li>首包留存率（40帧）：0.175 -> 0.725</li>
+      <li>音质（PESQ）：3.89 -> 3.81</li>
+    </ul>
+    </ul>
+   </ul>
+
+</section>
+</section>
+
+<section>
+  <section id="flexspeech" class="title-slide slide level1">
+    <h1>FlexSpeech</h1>
+
+  </section>
+  <section id="flexspeech" class="slide level2">
+    <h2>FlexSpeech: AR与NAR相结合的尝试</h2>
+    <ul>
+      <li>出发点：AR更擅长韵律表达，NAR有更好地稳定性、可控性，如何结合二者的优势？</li>
+      <li>方法：</li>
+      <ul>
+        <li>音素建模，DiT为主干网络，Flow-matching还原为mel</li>
+        <li>Encoder-Decoder结构预测离散化时长，Encoder加入mlm建模，提升语义理解能力，Decoder自回归预测</li>
+        
+      </ul>
+      <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+        <!-- <img src="imgs/streamfm/mask.jpg" style="height: 140pt; object-fit: cover;"> -->
+        <img src="imgs/flex/overview.jpg" style="height: 290pt; object-fit: cover;">
+      </div>
+    </ul>
+  </section>
+  <section id="flexspeech" class="slide level2">
+    <h2>FlexSpeech: AR与NAR相结合的尝试</h2>
+    <ul>
+      <li>韵律风格不好 != 时长模型预测差，时长模型预测的时长不符合主观偏好</li>
+      <li>通过DPO实现偏好优化。sft loss维持知识，只在差异时长上计算dpo loss</li>
+    
+      <ul>
+        <li>少量人工标注偏好数据 -> 提高稳定性&主观听感 </li>
+        <li>少量风格偏好数据 -> 快速风格迁移</li>
+      </ul>
+      <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+        <!-- <img src="imgs/streamfm/mask.jpg" style="height: 140pt; object-fit: cover;"> -->
+        <img src="imgs/flex/dpo.jpg" style="height: 290pt; object-fit: cover;">
+      </div>
+    </ul>
+  </section>
 
 
+    <section id="flexspeech" class="slide level2">
+    <h2>FlexSpeech Results</h2>
+    <ul>
+      <p>零样本克隆</p>
+    </ul>
+  <div class="audio-grid">
+    <!-- 第一列：一个整体容器，里头既有标题，也有两条 audio -->
+    <div class="audio-column">
+      <div class="column-title">Reference</div>
+      <audio controls src="audios/flex/comparison/ref/en_2.wav"></audio>
+
+      <audio controls src="audios/flex/comparison/ref/mega3_trump.wav"></audio>
+      <audio controls src="audios/flex/comparison/ref/moqianxue_37.wav"></audio>
+      <audio controls src="audios/flex/comparison/ref/gct_dingzhen.wav"></audio>
+    
+    </div>
+  
+    <!-- 第二列：同理 -->
+    <div class="audio-column">
+      <div class="column-title">FlexSpeech</div>
+      <audio controls src="audios/flex/comparison/zeroshot_demo/en_2-testclean_7127_75947_0016.wav"></audio>
+      <audio controls src="audios/flex/comparison/zeroshot_demo/mega3_trump-seed_23176029.wav"></audio>
+      <audio controls src="audios/flex/comparison/zeroshot_demo/moqianxue_37-other004.wav"></audio>
+      <audio controls src="audios/flex/comparison/zeroshot_demo/gct_dingzhen-other079.wav"></audio>
+    </div>
+  </div>
+  <br>
+  <ul>
+      <p style="display:inline-block; margin:0; vertical-align:middle;">
+        风格迁移
+      </p>
+      <audio controls src="audios/flex/styletransfer/stype_prompt/e85s028.wav"
+        style="vertical-align:middle; margin-left:0.5em;"></audio>  </ul>
+  <div class="audio-grid">
+    <!-- 第一列：一个整体容器，里头既有标题，也有两条 audio -->
+    <div class="audio-column">
+      <div class="column-title">Reference</div>
+      <audio controls src="audios/flex/styletransfer/speaker/eo_female.wav"></audio>
+      <audio controls src="audios/flex/styletransfer/speaker/y132.wav"></audio>
+    </div>
+  
+    <!-- 第二列：同理 -->
+    <div class="audio-column">
+      <div class="column-title">Results</div>
+      <audio controls src="audios/flex/styletransfer/res/eo_female_e85s028-e106s158_7.wav"></audio>
+      <audio controls src="audios/flex/styletransfer/res/y132_e87s127-e133s109_6.wav"></audio>
+    </div>
+  </div>
+
+      </section>
+</section>
+<section id="title-slide">
+  <h1 class="title">Thanks! </h1>
+
+  <!-- <p style=" height: 300px;text-align: right;margin-top: 100px;padding-right: 60px;">
+    郭大可 2025
+  </p> -->
+</section>
     </div>
   </div>
 
