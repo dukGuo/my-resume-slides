@@ -252,8 +252,8 @@
     <!-- 第二列：同理 -->
     <div class="audio-column">
       <div class="column-title">TACA-LM</div>
-      <audio controls src="audios/taca/TACA-LM/text_6.wav"></audio>
-      <audio controls src="audios/taca/TACA-LM/text_6.wav"></audio>
+      <audio controls src="audios/taca/TACA-LM/text_1.wav"></audio>
+      <audio controls src="audios/taca/TACA-LM/text_5.wav"></audio>
     </div>
   </div>
   
@@ -269,7 +269,7 @@
 <section id="Stream" class="slide level2">
   <h2>StreamFlow：Flow-matching流式解码方案</h2>
   <ul>
-    <li>出发点: ASR token提升了LM的性，但后端解码依赖Flow-matching -> 难以满足实时性要求</li>
+    <li>出发点: ASR token提升了LM的稳定性，但后端解码依赖Flow-matching -> 难以满足实时性要求</li>
     <li>方法： </li>
     <ul>
         <li>架构调整: <del>UNet+Transfomer</del> -> DiTs (利于模型感受野控制) </li>
@@ -293,7 +293,7 @@
     <ul>
       <li>Block Mask: block内可见，不改变感受野 </li>
       <li>Backward Mask: 可见历史 block，将感受野向历史扩张 </li>
-      <li>Forward Mask: 可见未来 block 将感受野向未来扩张 </li>
+      <li>Forward Mask: 可见未来 block， 将感受野向未来扩张 </li>
     </ul>
     <li>三种mask在DiT block中自由分配，可以精确的控制模型整体可见范围（类似卷积）</li>
     <blockquote>Token2wav 是比较local，对全局感受野的需求不大</blockquote>
